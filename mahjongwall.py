@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from math import ceil
+from math import pi, cos, sin
 from string import Template
 
+WALL_TILT_DEGREES = 22.5
 WALL_COLUMN_COUNTS = [17, 18]
 INNER_COLUMN_COUNT = 13
 
@@ -23,13 +24,14 @@ ILLUSTRATION_TEMPLATE = Template(f'''\
     fill="$tile_fill" stroke="$tile_border" stroke-width="$tile_border_width"
     />
 </defs>
-$walls_content
+$table_content_tilted
 </svg>
 ''')
 
 
 def build_svg(column_count, show_starts):
-    view_width = 1.1 * (2 * column_count - INNER_COLUMN_COUNT) * TILE_WIDTH
+    wall_tilt = WALL_TILT_DEGREES * pi / 180
+    view_width = (2 * column_count - INNER_COLUMN_COUNT) * TILE_WIDTH * (cos(wall_tilt) + sin(wall_tilt))
     inner_side_length = INNER_COLUMN_COUNT * TILE_WIDTH
 
     east_first_tile_left = inner_side_length/2 - TILE_WIDTH
@@ -44,7 +46,9 @@ def build_svg(column_count, show_starts):
         for wall_index in range(0, 4)
     )
 
-    walls_content = four_walls  # TODO
+    table_content = four_walls  # TODO
+
+    table_content_tilted = f'<g transform="rotate(-{WALL_TILT_DEGREES})">\n{table_content}\n</g>'
 
     svg_content = ILLUSTRATION_TEMPLATE.substitute(
         view_left=-view_width/2,
@@ -57,7 +61,7 @@ def build_svg(column_count, show_starts):
         tile_fill=TILE_FILL,
         tile_border=TILE_BORDER,
         tile_border_width=TILE_BORDER_WIDTH,
-        walls_content=walls_content,
+        table_content_tilted=table_content_tilted,
     )
     return svg_content
 
