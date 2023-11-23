@@ -36,11 +36,16 @@ def build_svg(column_count, show_starts):
     east_first_tile_left = inner_side_length/2 - TILE_WIDTH
     east_first_tile_top = inner_side_length/2
 
-    unrotated_wall = '\n'.join(
+    single_wall = '\n'.join(
         f'<use href="#tile" x="{east_first_tile_left - column_index * TILE_WIDTH}" y="{east_first_tile_top}" />'
         for column_index in range(column_count)
     )
-    walls_content = unrotated_wall  # TODO
+    four_walls = '\n'.join(
+        f'<g transform="rotate({wall_index * 90})">\n{single_wall}\n</g>'
+        for wall_index in range(0, 4)
+    )
+
+    walls_content = four_walls  # TODO
 
     svg_content = ILLUSTRATION_TEMPLATE.substitute(
         view_left=-VIEW_HALF_WIDTH,
