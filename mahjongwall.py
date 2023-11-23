@@ -4,7 +4,7 @@ from math import ceil
 from string import Template
 
 WALL_COLUMN_COUNTS = [17, 18]
-INNER_SQUARE_COLUMNS = 13
+INNER_COLUMN_COUNT = 13
 
 TILE_WIDTH = 28
 TILE_HEIGHT = 37
@@ -12,8 +12,6 @@ TILE_ROUNDING_RADIUS = 5
 TILE_FILL = "green"
 TILE_BORDER = "black"
 TILE_BORDER_WIDTH = 2
-
-VIEW_HALF_WIDTH = ceil(1.3 * max(WALL_COLUMN_COUNTS) / 2 * TILE_WIDTH)
 
 ILLUSTRATION_TEMPLATE = Template(f'''\
 <?xml version="1.0" encoding="UTF-8"?>
@@ -31,7 +29,8 @@ $walls_content
 
 
 def build_svg(column_count, show_starts):
-    inner_side_length = INNER_SQUARE_COLUMNS * TILE_WIDTH
+    view_width = 1.1 * (2 * column_count - INNER_COLUMN_COUNT) * TILE_WIDTH
+    inner_side_length = INNER_COLUMN_COUNT * TILE_WIDTH
 
     east_first_tile_left = inner_side_length/2 - TILE_WIDTH
     east_first_tile_top = inner_side_length/2
@@ -48,10 +47,10 @@ def build_svg(column_count, show_starts):
     walls_content = four_walls  # TODO
 
     svg_content = ILLUSTRATION_TEMPLATE.substitute(
-        view_left=-VIEW_HALF_WIDTH,
-        view_top=-VIEW_HALF_WIDTH,
-        view_width=2 * VIEW_HALF_WIDTH,
-        view_height=2 * VIEW_HALF_WIDTH,
+        view_left=-view_width/2,
+        view_top=-view_width/2,
+        view_width=view_width,
+        view_height=view_width,
         tile_width=TILE_WIDTH,
         tile_height=TILE_HEIGHT,
         rounding_radius=TILE_ROUNDING_RADIUS,
