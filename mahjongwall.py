@@ -110,7 +110,7 @@ def build_single_start(dice_roll, column_count, inner_side_length):
         f'<use href="#start" x="{tail_x :.0f}" y="{tail_y :.0f}" />'
         f'<g transform="'
         f'translate('
-        f'{tail_x - (0.2 if dice_roll < column_count else 0.8) * TILE_HEIGHT :.0f} '
+        f'{tail_x - (0.2 if slit_index > 0 else 0.8) * TILE_HEIGHT :.0f} '
         f'{tail_y + shrink_if(wall_index == 2 or dice_roll < 10) * 1.4 * TILE_HEIGHT :.0f}'
         f') '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90}) '
