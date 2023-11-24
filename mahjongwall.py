@@ -83,9 +83,12 @@ def build_single_wall(wall_index, column_count, inner_side_length):
     initial_top = inner_side_length/2
 
     east_wall = '\n'.join(
-        f'<use href="#tile" x="{initial_left - column_index * TILE_WIDTH}" y="{initial_top}" />'
+        f'<use href="#tile" x="{initial_left - column_index * TILE_WIDTH :.0f}" y="{initial_top :.0f}" />'
         f'<g transform="'
-        f'translate({initial_left - 4 * TILE_HEIGHT} {initial_top + shrink_if(wall_index == 2) * 4.8 * TILE_HEIGHT}) '
+        f'translate('
+        f'{initial_left - 4 * TILE_HEIGHT :.0f} '
+        f'{initial_top + shrink_if(wall_index == 2) * 4.8 * TILE_HEIGHT :.0f}'
+        f') '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90})'
         f'"><text class="wind">{WIND_TEXT_FROM_INDEX[wall_index]}</text></g>'
         for column_index in range(column_count)
@@ -102,11 +105,11 @@ def build_single_start(dice_roll, column_count, inner_side_length):
     tail_y = inner_side_length/2 + TILE_HEIGHT
 
     east_start = (
-        f'<use href="#start" x="{tail_x}" y="{tail_y}" />'
+        f'<use href="#start" x="{tail_x :.0f}" y="{tail_y :.0f}" />'
         f'<g transform="'
         f'translate('
-        f'{tail_x - (0.2 if dice_roll < column_count else 0.8) * TILE_HEIGHT} '
-        f'{tail_y + shrink_if(wall_index == 2 or dice_roll < 10) * 1.4 * TILE_HEIGHT}'
+        f'{tail_x - (0.2 if dice_roll < column_count else 0.8) * TILE_HEIGHT :.0f} '
+        f'{tail_y + shrink_if(wall_index == 2 or dice_roll < 10) * 1.4 * TILE_HEIGHT :.0f}'
         f') '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90}) '
         f'"><text class="start">{dice_roll}</text></g>'
@@ -135,14 +138,14 @@ def build_svg(column_count, show_starts):
     table_content_tilted = f'<g transform="rotate(-{WALL_TILT_DEGREES})">\n{table_content}\n</g>'
 
     svg_content = ILLUSTRATION_TEMPLATE.substitute(
-        view_left=-view_width/2,
-        view_top=-view_width/2,
-        view_width=view_width,
-        view_height=view_width,
+        view_left=round(-view_width/2),
+        view_top=round(-view_width/2),
+        view_width=round(view_width),
+        view_height=round(view_width),
         tile_width=TILE_WIDTH,
         tile_height=TILE_HEIGHT,
-        start_width=start_width,
-        start_height=start_height,
+        start_width=round(start_width),
+        start_height=round(start_height),
         rounding_radius=TILE_ROUNDING_RADIUS,
         tile_fill_colour=TILE_FILL_COLOUR,
         tile_border_colour=TILE_BORDER_COLOUR,
