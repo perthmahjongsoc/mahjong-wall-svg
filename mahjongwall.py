@@ -19,7 +19,7 @@ TILE_BORDER_WIDTH = 2
 
 START_COLOUR = 'crimson'
 START_LINE_WIDTH = 5
-START_FONT_SIZE = '24px'
+START_FONT_SIZE = '36px'
 
 WIND_TEXT_FROM_INDEX = {
     0: '東 E',
@@ -64,6 +64,13 @@ $table_content_tilted
 ''')
 
 
+def west_shrink(wall_index):
+    if wall_index == 2:
+        return 0.9
+    else:
+        return 1
+
+
 def build_single_wall(wall_index, column_count, inner_side_length):
     initial_left = inner_side_length/2 - TILE_WIDTH
     initial_top = inner_side_length/2
@@ -71,7 +78,7 @@ def build_single_wall(wall_index, column_count, inner_side_length):
     east_wall = '\n'.join(
         f'<use href="#tile" x="{initial_left - column_index * TILE_WIDTH}" y="{initial_top}" />'
         f'<g transform="'
-        f'translate({initial_left - 5 * TILE_HEIGHT} {initial_top + (4 if wall_index == 2 else 4.5) * TILE_HEIGHT}) '
+        f'translate({initial_left - 4 * TILE_HEIGHT} {initial_top + west_shrink(wall_index) * 4.8 * TILE_HEIGHT}) '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90})'
         f'"><text class="wind">{WIND_TEXT_FROM_INDEX[wall_index]}</text></g>'
         for column_index in range(column_count)
@@ -90,7 +97,7 @@ def build_single_start(dice_roll, column_count, inner_side_length, start_height)
     east_start = (
         f'<use href="#start" x="{tail_x}" y="{tail_y}" />'
         f'<g transform="'
-        f'translate({tail_x - 0.2 * start_height} {tail_y + 2 * start_height}) '
+        f'translate({tail_x - 0.1 * TILE_HEIGHT} {tail_y + west_shrink(wall_index) * 1.4 * TILE_HEIGHT}) '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90}) '
         f'"><text class="start">{dice_roll}</text></g>'
     )
