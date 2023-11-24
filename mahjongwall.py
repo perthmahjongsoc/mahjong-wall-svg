@@ -33,6 +33,9 @@ ILLUSTRATION_TEMPLATE = Template('''\
 <?xml version="1.0" encoding="UTF-8"?>
 <svg viewBox="$view_left $view_top $view_width $view_height" xmlns="http://www.w3.org/2000/svg">
 <style>
+  #arrowhead {
+    fill: $start_colour;
+  }
   #start {
     fill: none;
     stroke: $start_colour;
@@ -56,7 +59,11 @@ ILLUSTRATION_TEMPLATE = Template('''\
   }
 </style>
 <defs>
-  <path id="start" d="M 0 0 v $start_height h -$start_width" />
+  <marker id="arrowhead" viewBox="0 -15 50 30" refX="25" refY="0"
+    markerUnits="userSpaceOnUse" markerWidth="50" markerHeight="15" orient="auto-start-reverse">
+    <path d="M 0 -15 L 0 15 L 50 0 z"/>
+  </marker>
+  <path id="start" marker-end="url(#arrowhead)" d="M 0 0 v $start_height h -$start_width" />
   <rect id="tile" width="$tile_width" height="$tile_height" rx="$rounding_radius" ry="$rounding_radius" />
 </defs>
 $table_content_tilted
