@@ -52,7 +52,7 @@ def build_single_wall(wall_index, column_count, inner_side_length):
     initial_top = inner_side_length/2
     overhang_column_count = column_count - INNER_COLUMN_COUNT
 
-    return '\n'.join(
+    east_wall = '\n'.join(
         f'<use href="#tile" x="{initial_left - column_index * TILE_WIDTH}" y="{initial_top}" />'
         f'<g transform="'
         f'rotate({WALL_TILT_DEGREES}) '
@@ -62,6 +62,8 @@ def build_single_wall(wall_index, column_count, inner_side_length):
         for column_index in range(column_count)
     )
 
+    return f'<g transform="rotate({wall_index * 90})">\n{east_wall}\n</g>'
+
 
 def build_svg(column_count, show_starts):
     wall_tilt = WALL_TILT_DEGREES * pi / 180
@@ -69,9 +71,7 @@ def build_svg(column_count, show_starts):
     inner_side_length = INNER_COLUMN_COUNT * TILE_WIDTH
 
     four_walls = '\n'.join(
-        f'<g transform="rotate({wall_index * 90})">\n'
-        f'{build_single_wall(wall_index, column_count, inner_side_length)}\n'
-        f'</g>'
+        build_single_wall(wall_index, column_count, inner_side_length)
         for wall_index in range(0, 4)
     )
 
