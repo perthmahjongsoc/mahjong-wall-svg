@@ -82,8 +82,11 @@ def build_single_wall(wall_index, column_count, inner_side_length):
     initial_left = inner_side_length/2 - TILE_WIDTH
     initial_top = inner_side_length/2
 
-    east_wall = '\n'.join(
+    tiles = '\n'.join(
         f'<use href="#tile" x="{initial_left - column_index * TILE_WIDTH :.0f}" y="{initial_top :.0f}" />'
+        for column_index in range(column_count)
+    )
+    wind = (
         f'<g transform="'
         f'translate('
         f'{initial_left - 4 * TILE_HEIGHT :.0f} '
@@ -91,10 +94,9 @@ def build_single_wall(wall_index, column_count, inner_side_length):
         f') '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90})'
         f'"><text class="wind">{WIND_TEXT_FROM_INDEX[wall_index]}</text></g>'
-        for column_index in range(column_count)
     )
 
-    return f'<g transform="rotate({-wall_index * 90})">\n{east_wall}\n</g>'
+    return f'<g transform="rotate({-wall_index * 90})">\n{tiles}\n{wind}</g>'
 
 
 def build_single_start(dice_roll, column_count, inner_side_length):
