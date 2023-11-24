@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-from math import pi, cos, sin
 from string import Template
 
 WALL_TILT_DEGREES = 23.4
 WALL_COLUMN_COUNTS = [17, 18]
-INNER_COLUMN_COUNT = 13
+INNER_COLUMN_COUNT = 11
+VIEW_SAFETY_FACTOR = 1.2
 
 DICE_ROLL_MIN = 3
 DICE_ROLL_MAX = 18
@@ -116,8 +116,7 @@ def build_single_start(dice_roll, column_count, inner_side_length):
 
 
 def build_svg(column_count, show_starts):
-    wall_tilt = WALL_TILT_DEGREES * pi / 180
-    view_width = (2 * max(WALL_COLUMN_COUNTS) - INNER_COLUMN_COUNT) * TILE_WIDTH * (cos(wall_tilt) + sin(wall_tilt))
+    view_width = VIEW_SAFETY_FACTOR * (2 * max(WALL_COLUMN_COUNTS) - INNER_COLUMN_COUNT) * TILE_WIDTH
     inner_side_length = INNER_COLUMN_COUNT * TILE_WIDTH
 
     start_width = 2.5 * TILE_WIDTH
