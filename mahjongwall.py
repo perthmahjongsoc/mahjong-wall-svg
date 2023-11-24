@@ -31,7 +31,7 @@ WIND_FONT_SIZE = '72px'
 
 ILLUSTRATION_TEMPLATE = Template('''\
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="$view_left $view_top $view_width $view_height" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="$view_left $view_top $view_width $view_height" width="480px" xmlns="http://www.w3.org/2000/svg">
 <style>
   #arrowhead {
     fill: $start_colour;
