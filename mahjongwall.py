@@ -94,7 +94,7 @@ def build_single_wall(wall_index, column_count, inner_side_length):
     return f'<g transform="rotate({-wall_index * 90})">\n{east_wall}\n</g>'
 
 
-def build_single_start(dice_roll, column_count, inner_side_length, start_height):
+def build_single_start(dice_roll, column_count, inner_side_length):
     wall_index = (dice_roll - 1) % 4 - dice_roll // column_count
     slit_index = dice_roll % column_count
 
@@ -128,7 +128,7 @@ def build_svg(column_count, show_starts):
         for wall_index in range(0, 4)
     )
     starts = '\n'.join(
-        build_single_start(dice_roll, column_count, inner_side_length, start_height)
+        build_single_start(dice_roll, column_count, inner_side_length)
         for dice_roll in range(DICE_ROLL_MIN, DICE_ROLL_MAX + 1)
     )
 
