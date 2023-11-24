@@ -104,7 +104,10 @@ def build_single_start(dice_roll, column_count, inner_side_length, start_height)
     east_start = (
         f'<use href="#start" x="{tail_x}" y="{tail_y}" />'
         f'<g transform="'
-        f'translate({tail_x - 0.1 * TILE_HEIGHT} {tail_y + shrink_if(wall_index == 2) * 1.4 * TILE_HEIGHT}) '
+        f'translate('
+        f'{tail_x - 0.1 * TILE_HEIGHT} '
+        f'{tail_y + shrink_if(wall_index == 2 or dice_roll < 10) * 1.4 * TILE_HEIGHT}'
+        f') '
         f'rotate({WALL_TILT_DEGREES + wall_index * 90}) '
         f'"><text class="start">{dice_roll}</text></g>'
     )
