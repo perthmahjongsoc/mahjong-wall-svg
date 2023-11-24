@@ -3,7 +3,7 @@
 from math import pi, cos, sin
 from string import Template
 
-WALL_TILT_DEGREES = 22.5
+WALL_TILT_DEGREES = 23.4
 WALL_COLUMN_COUNTS = [17, 18]
 INNER_COLUMN_COUNT = 13
 
